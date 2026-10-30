@@ -27,10 +27,10 @@ nav{
     align-items:center;
     justify-content:space-between;
     border-bottom:1px solid rgba(255,255,255,.08);
-    background:rgba(8,12,24,.85);
+    background:#080c18;
     position:sticky;
     top:0;
-    z-index:100;
+    z-index:1000;
 }
 
 .logo{
@@ -60,6 +60,7 @@ nav{
 
 .notification-wrapper{
     position:relative;
+    z-index:1100;
 }
 
 .notification{
@@ -68,8 +69,8 @@ nav{
     height:42px;
     border-radius:11px;
     border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.06);
-    color:white;
+    background:rgba(255,255,255,.05);
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -107,10 +108,10 @@ nav{
     border:1px solid rgba(255,255,255,.12);
     background:#151b2d;
     border-radius:17px;
-    box-shadow:0 20px 60px rgba(0,0,0,.45);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
     overflow:hidden;
     display:none;
-    z-index:500;
+    z-index:2000;
 }
 
 .notification-popup.show{
@@ -500,12 +501,13 @@ nav{
 
     <div class="nav-right">
 
-        <div class="notification-wrapper">
+        <div class="notification-wrapper" id="notificationWrapper">
 
             <button type="button"
                 class="notification"
-                onclick="showNotifications(event)"
-                title="Notifications">
+                id="notificationButton"
+                aria-label="Open notifications"
+                aria-expanded="false">
                 🔔
                 <span class="notification-count hidden" id="notificationCount">0</span>
             </button>
@@ -526,7 +528,7 @@ nav{
                 <div class="notification-footer">
                     <button class="view-requests-btn"
                         type="button"
-                        onclick="viewAllRequests()">
+                        id="viewRequestsButton">
                         View All Project Requests
                     </button>
                 </div>
@@ -534,7 +536,7 @@ nav{
             </div>
         </div>
 
-        <button class="logout-btn" onclick="logout()">
+        <button class="logout-btn" id="logoutButton">
             Logout
         </button>
 
@@ -649,36 +651,36 @@ const API_URL = "https://6cmkqxcivc.execute-api.ap-south-1.amazonaws.com/prod/re
 let projectRequests = [];
 
 
-// NOTIFICATION BELL CLICK
-function showNotifications(event) {
-
-    if (event) {
-        event.stopPropagation();
-    }
-
-    const popup = document.getElementById("notificationPopup");
-
-    if (!popup) {
-        console.error("Notification popup not found");
-        return;
-    }
-
-    popup.classList.toggle("show");
-}
+// GET PAGE ELEMENTS
+const notificationButton = document.getElementById("notificationButton");
+const notificationPopup = document.getElementById("notificationPopup");
+const notificationWrapper = document.getElementById("notificationWrapper");
+const viewRequestsButton = document.getElementById("viewRequestsButton");
+const logoutButton = document.getElementById("logoutButton");
 
 
-// CLOSE POPUP WHEN CLICKING OUTSIDE
+// BELL CLICK EVENT
+notificationButton.addEventListener("click", function(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    notificationPopup.classList.toggle("show");
+
+    notificationButton.setAttribute(
+        "aria-expanded",
+        notificationPopup.classList.contains("show") ? "true" : "false"
+    );
+
+});
+
+
+// CLOSE POPUP ON OUTSIDE CLICK
 document.addEventListener("click", function(event) {
 
-    const wrapper = document.querySelector(".notification-wrapper");
-    const popup = document.getElementById("notificationPopup");
-
-    if (
-        wrapper &&
-        popup &&
-        !wrapper.contains(event.target)
-    ) {
-        popup.classList.remove("show");
+    if (!notificationWrapper.contains(event.target)) {
+        notificationPopup.classList.remove("show");
+        notificationButton.setAttribute("aria-expanded", "false");
     }
 
 });
@@ -702,13 +704,11 @@ function escapeHTML(value) {
 }
 
 
-// UPDATE NOTIFICATION COUNT
+// UPDATE COUNT
 function updateNotificationCount() {
 
     const count = document.getElementById("notificationCount");
     const headerCount = document.getElementById("notificationHeaderCount");
-
-    if (!count) return;
 
     const total = projectRequests.length;
 
@@ -717,31 +717,25 @@ function updateNotificationCount() {
         count.textContent = total;
         count.classList.remove("hidden");
 
-        if (headerCount) {
-            headerCount.textContent =
-                total + " new request" + (total === 1 ? "" : "s");
-        }
+        headerCount.textContent =
+            total + " new request" + (total === 1 ? "" : "s");
 
     } else {
 
         count.textContent = "0";
         count.classList.add("hidden");
 
-        if (headerCount) {
-            headerCount.textContent = "No new requests";
-        }
+        headerCount.textContent = "No new requests";
 
     }
 
 }
 
 
-// DISPLAY NOTIFICATIONS
+// RENDER NOTIFICATIONS
 function renderNotifications() {
 
     const body = document.getElementById("notificationBody");
-
-    if (!body) return;
 
     if (projectRequests.length === 0) {
 
@@ -776,7 +770,7 @@ function renderNotifications() {
         );
 
         return `
-            <div class="notification-item" onclick="openRequestPanel()">
+            <div class="notification-item" data-open-requests="true">
 
                 <div class="notification-item-title">
                     🚀 ${client}
@@ -799,12 +793,10 @@ function renderNotifications() {
 }
 
 
-// DISPLAY ALL PROJECT REQUESTS
+// RENDER PROJECT REQUESTS
 function renderRequests() {
 
     const requestList = document.getElementById("requestList");
-
-    if (!requestList) return;
 
     if (projectRequests.length === 0) {
 
@@ -872,37 +864,41 @@ function renderRequests() {
 function openRequestPanel() {
 
     const panel = document.getElementById("requestPanel");
-    const popup = document.getElementById("notificationPopup");
 
-    if (popup) {
-        popup.classList.remove("show");
-    }
+    notificationPopup.classList.remove("show");
+    notificationButton.setAttribute("aria-expanded", "false");
 
-    if (panel) {
+    panel.classList.add("show");
 
-        panel.classList.add("show");
-
-        panel.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    }
+    panel.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
 }
 
 
-// VIEW ALL REQUESTS
-function viewAllRequests() {
+// VIEW ALL BUTTON
+viewRequestsButton.addEventListener("click", function(event) {
+
+    event.stopPropagation();
     openRequestPanel();
-}
+
+});
+
+
+// CLICK NOTIFICATION ITEM
+document.getElementById("notificationBody").addEventListener("click", function(event) {
+
+    if (event.target.closest("[data-open-requests]")) {
+        openRequestPanel();
+    }
+
+});
 
 
 // LOAD REQUESTS FROM AWS
 async function loadProjectRequests() {
-
-    const requestList = document.getElementById("requestList");
-    const notificationBody = document.getElementById("notificationBody");
 
     try {
 
@@ -928,40 +924,23 @@ async function loadProjectRequests() {
 
         let data = result;
 
-        // API Gateway response handling
         if (data && typeof data.body === "string") {
-
             data = JSON.parse(data.body);
-
         } else if (data && data.body && typeof data.body === "object") {
-
             data = data.body;
-
         }
 
-        // Identify requests array
         if (Array.isArray(data)) {
-
             projectRequests = data;
-
         } else if (data && Array.isArray(data.requests)) {
-
             projectRequests = data.requests;
-
         } else if (data && Array.isArray(data.Items)) {
-
             projectRequests = data.Items;
-
         } else if (data && Array.isArray(data.data)) {
-
             projectRequests = data.data;
-
         } else {
-
             projectRequests = [];
-
-            console.log("AWS response does not contain a recognised requests array.");
-
+            console.log("No recognised request array in AWS response.");
         }
 
         renderRequests();
@@ -972,14 +951,7 @@ async function loadProjectRequests() {
 
         console.error("AWS Request Error:", error);
 
-        if (requestList) {
-            requestList.innerHTML =
-                '<div class="no-request">Unable to load project requests.</div>';
-        }
+        document.getElementById("requestList").innerHTML =
+            '<div class="no-request">Unable to load project requests.</div>';
 
-        if (notificationBody) {
-            notificationBody.innerHTML =
-                '<div class="notification-empty">Unable to load notifications.</div>';
-        }
-
-        projectRequests = [];
+        document.getElementById("notificationBody").innerHTML =
