@@ -20,32 +20,6 @@ body{
     overflow-x:hidden;
 }
 
-body::before{
-    content:"";
-    position:fixed;
-    width:450px;
-    height:450px;
-    background:#6c3cff;
-    filter:blur(150px);
-    opacity:.16;
-    top:-170px;
-    left:-120px;
-    z-index:-1;
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    width:400px;
-    height:400px;
-    background:#00d9ff;
-    filter:blur(150px);
-    opacity:.10;
-    right:-160px;
-    bottom:-140px;
-    z-index:-1;
-}
-
 nav{
     width:100%;
     padding:18px 6%;
@@ -53,8 +27,7 @@ nav{
     align-items:center;
     justify-content:space-between;
     border-bottom:1px solid rgba(255,255,255,.08);
-    background:rgba(8,12,24,.65);
-    backdrop-filter:blur(18px);
+    background:rgba(8,12,24,.85);
     position:sticky;
     top:0;
     z-index:100;
@@ -77,8 +50,6 @@ nav{
     justify-content:center;
     background:linear-gradient(135deg,#6c3cff,#00d9ff);
     font-size:20px;
-    font-weight:900;
-    box-shadow:0 0 25px rgba(0,217,255,.22);
 }
 
 .nav-right{
@@ -96,20 +67,14 @@ nav{
     width:42px;
     height:42px;
     border-radius:11px;
-    border:1px solid rgba(255,255,255,.10);
-    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.06);
+    color:white;
     display:flex;
     align-items:center;
     justify-content:center;
     cursor:pointer;
-    transition:.3s;
     font-size:19px;
-}
-
-.notification:hover{
-    transform:translateY(-2px);
-    border-color:rgba(0,217,255,.35);
-    background:rgba(0,217,255,.07);
 }
 
 .notification-count{
@@ -139,9 +104,8 @@ nav{
     right:0;
     width:340px;
     max-width:calc(100vw - 30px);
-    border:1px solid rgba(255,255,255,.10);
-    background:rgba(15,20,36,.97);
-    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.12);
+    background:#151b2d;
     border-radius:17px;
     box-shadow:0 20px 60px rgba(0,0,0,.45);
     overflow:hidden;
@@ -151,18 +115,6 @@ nav{
 
 .notification-popup.show{
     display:block;
-    animation:notificationOpen .2s ease;
-}
-
-@keyframes notificationOpen{
-    from{
-        opacity:0;
-        transform:translateY(-8px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 .notification-header{
@@ -191,15 +143,10 @@ nav{
     padding:15px 18px;
     border-bottom:1px solid rgba(255,255,255,.06);
     cursor:pointer;
-    transition:.25s;
 }
 
 .notification-item:hover{
-    background:rgba(255,255,255,.04);
-}
-
-.notification-item:last-child{
-    border-bottom:none;
+    background:rgba(255,255,255,.05);
 }
 
 .notification-item-title{
@@ -222,7 +169,6 @@ nav{
     background:rgba(0,217,255,.10);
     color:#8defff;
     font-size:10px;
-    font-weight:700;
 }
 
 .notification-empty{
@@ -240,13 +186,11 @@ nav{
 .view-requests-btn{
     width:100%;
     padding:10px;
-    border:none;
     border-radius:9px;
     background:rgba(0,217,255,.08);
     border:1px solid rgba(0,217,255,.18);
     color:#8defff;
     cursor:pointer;
-    font-size:12px;
     font-weight:700;
 }
 
@@ -257,15 +201,6 @@ nav{
     padding:11px 19px;
     border-radius:10px;
     cursor:pointer;
-    font-size:14px;
-    font-weight:600;
-    transition:.3s;
-}
-
-.logout-btn:hover{
-    background:rgba(255,65,108,.10);
-    border-color:rgba(255,65,108,.35);
-    transform:translateY(-2px);
 }
 
 .main{
@@ -288,9 +223,7 @@ nav{
 }
 
 .badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
+    display:inline-block;
     padding:8px 14px;
     border-radius:30px;
     background:rgba(0,217,255,.05);
@@ -300,18 +233,9 @@ nav{
     margin-bottom:22px;
 }
 
-.badge-dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#00e5ff;
-    box-shadow:0 0 12px #00e5ff;
-}
-
 .hero h1{
     font-size:clamp(38px,5vw,62px);
-    line-height:1.05;
-    letter-spacing:-2px;
+    line-height:1.1;
     margin-bottom:20px;
 }
 
@@ -325,43 +249,17 @@ nav{
     color:#9da7ba;
     font-size:16px;
     line-height:1.7;
-    max-width:600px;
 }
 
 .hero-visual{
-    width:240px;
-    height:240px;
-    position:relative;
+    width:220px;
+    height:220px;
+    border:2px solid rgba(0,217,255,.2);
+    border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
     flex-shrink:0;
-}
-
-.ring{
-    position:absolute;
-    border-radius:50%;
-    border:1px solid rgba(0,217,255,.18);
-}
-
-.ring.one{
-    width:230px;
-    height:230px;
-    animation:spin 16s linear infinite;
-}
-
-.ring.two{
-    width:175px;
-    height:175px;
-    border-color:rgba(108,60,255,.25);
-    animation:spinReverse 11s linear infinite;
-}
-
-.ring.three{
-    width:125px;
-    height:125px;
-    border-color:rgba(0,217,255,.25);
-    animation:spin 8s linear infinite;
 }
 
 .center-logo{
@@ -374,18 +272,6 @@ nav{
     background:linear-gradient(135deg,#6c3cff,#00d9ff);
     font-size:32px;
     font-weight:900;
-    box-shadow:0 0 30px rgba(0,217,255,.25),0 0 60px rgba(108,60,255,.18);
-    z-index:2;
-}
-
-@keyframes spin{
-    from{transform:rotate(0deg)}
-    to{transform:rotate(360deg)}
-}
-
-@keyframes spinReverse{
-    from{transform:rotate(360deg)}
-    to{transform:rotate(0deg)}
 }
 
 .modules-title{
@@ -410,55 +296,24 @@ nav{
 }
 
 .module{
-    position:relative;
-    min-height:220px;
+    min-height:190px;
     padding:28px;
     border-radius:20px;
     border:1px solid rgba(255,255,255,.09);
     background:rgba(255,255,255,.035);
-    backdrop-filter:blur(15px);
     text-decoration:none;
     color:#fff;
-    overflow:hidden;
-    transition:.35s ease;
-    cursor:pointer;
-}
-
-.module::before{
-    content:"";
-    position:absolute;
-    width:130px;
-    height:130px;
-    background:#6c3cff;
-    filter:blur(70px);
-    opacity:0;
-    top:-60px;
-    right:-40px;
-    transition:.35s;
+    transition:.3s;
 }
 
 .module:hover{
-    transform:translateY(-8px);
-    border-color:rgba(0,217,255,.25);
-    background:rgba(255,255,255,.055);
-    box-shadow:0 18px 45px rgba(0,0,0,.28);
-}
-
-.module:hover::before{
-    opacity:.20;
+    transform:translateY(-6px);
+    border-color:rgba(0,217,255,.3);
 }
 
 .module-icon{
-    width:55px;
-    height:55px;
-    border-radius:16px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:26px;
-    background:linear-gradient(135deg,rgba(108,60,255,.20),rgba(0,217,255,.10));
-    border:1px solid rgba(255,255,255,.08);
-    margin-bottom:24px;
+    font-size:27px;
+    margin-bottom:20px;
 }
 
 .module h3{
@@ -470,20 +325,6 @@ nav{
     color:#858fa3;
     font-size:14px;
     line-height:1.6;
-    max-width:310px;
-}
-
-.module-arrow{
-    position:absolute;
-    right:25px;
-    bottom:24px;
-    color:#00d9ff;
-    font-size:20px;
-    transition:.3s;
-}
-
-.module:hover .module-arrow{
-    transform:translateX(5px);
 }
 
 .request-panel{
@@ -493,7 +334,6 @@ nav{
     border-radius:22px;
     border:1px solid rgba(255,255,255,.09);
     background:rgba(255,255,255,.035);
-    backdrop-filter:blur(15px);
 }
 
 .request-panel.show{
@@ -540,7 +380,6 @@ nav{
     background:rgba(0,217,255,.10);
     color:#8defff;
     font-size:11px;
-    font-weight:700;
 }
 
 .request-info{
@@ -556,14 +395,8 @@ nav{
     line-height:1.6;
 }
 
-.no-request{
+.no-request,.loading{
     color:#858fa3;
-    text-align:center;
-    padding:25px;
-}
-
-.loading{
-    color:#8defff;
     text-align:center;
     padding:25px;
 }
@@ -573,7 +406,7 @@ nav{
     padding:35px;
     border-radius:22px;
     border:1px solid rgba(255,255,255,.08);
-    background:linear-gradient(135deg,rgba(108,60,255,.09),rgba(0,217,255,.04));
+    background:rgba(108,60,255,.08);
     text-align:center;
 }
 
@@ -596,47 +429,12 @@ nav{
     color:#fff;
     text-decoration:none;
     font-weight:700;
-    transition:.3s;
-}
-
-.cta-btn:hover{
-    transform:translateY(-3px);
-}
-
-.toast{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    padding:14px 19px;
-    border-radius:12px;
-    background:#151b2d;
-    border:1px solid rgba(255,255,255,.10);
-    color:#fff;
-    font-size:14px;
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
-    transform:translateY(100px);
-    opacity:0;
-    transition:.35s;
-    z-index:999;
-}
-
-.toast.show{
-    transform:translateY(0);
-    opacity:1;
 }
 
 @media(max-width:950px){
     .hero{
         flex-direction:column;
         text-align:center;
-    }
-
-    .hero-text{
-        margin:auto;
-    }
-
-    .hero p{
-        margin:auto;
     }
 
     .modules{
@@ -651,12 +449,6 @@ nav{
 
     .logo{
         font-size:19px;
-    }
-
-    .logo-box{
-        width:36px;
-        height:36px;
-        border-radius:10px;
     }
 
     .logout-btn{
@@ -675,11 +467,7 @@ nav{
     }
 
     .main{
-        padding:45px 5% 45px;
-    }
-
-    .hero{
-        margin-bottom:50px;
+        padding:45px 5%;
     }
 
     .hero h1{
@@ -687,46 +475,16 @@ nav{
     }
 
     .hero-visual{
-        width:200px;
-        height:200px;
-    }
-
-    .ring.one{
-        width:195px;
-        height:195px;
-    }
-
-    .ring.two{
-        width:150px;
-        height:150px;
-    }
-
-    .ring.three{
-        width:105px;
-        height:105px;
+        width:180px;
+        height:180px;
     }
 
     .modules{
         grid-template-columns:1fr;
     }
 
-    .module{
-        min-height:190px;
-    }
-
-    .cta{
-        padding:28px 20px;
-    }
-
     .request-top{
         flex-direction:column;
-    }
-
-    .toast{
-        left:18px;
-        right:18px;
-        bottom:18px;
-        text-align:center;
     }
 }
 </style>
@@ -741,12 +499,16 @@ nav{
     </div>
 
     <div class="nav-right">
+
         <div class="notification-wrapper">
 
-            <div class="notification" onclick="showNotifications()" title="Notifications">
+            <button type="button"
+                class="notification"
+                onclick="showNotifications(event)"
+                title="Notifications">
                 🔔
                 <span class="notification-count hidden" id="notificationCount">0</span>
-            </div>
+            </button>
 
             <div class="notification-popup" id="notificationPopup">
 
@@ -762,7 +524,9 @@ nav{
                 </div>
 
                 <div class="notification-footer">
-                    <button class="view-requests-btn" onclick="viewAllRequests()">
+                    <button class="view-requests-btn"
+                        type="button"
+                        onclick="viewAllRequests()">
                         View All Project Requests
                     </button>
                 </div>
@@ -773,6 +537,7 @@ nav{
         <button class="logout-btn" onclick="logout()">
             Logout
         </button>
+
     </div>
 </nav>
 
@@ -781,34 +546,21 @@ nav{
     <section class="hero">
 
         <div class="hero-text">
-
-            <div class="badge">
-                <span class="badge-dot"></span>
-                WebForge Workspace
-            </div>
+            <div class="badge">● WebForge Workspace</div>
 
             <h1>
                 Welcome to your
-                <span class="gradient-text">
-                    Workspace.
-                </span>
+                <span class="gradient-text">Workspace.</span>
             </h1>
 
             <p>
                 Manage your services, project requests, completed
                 projects and client workflow from one place.
             </p>
-
         </div>
 
         <div class="hero-visual">
-            <div class="ring one"></div>
-            <div class="ring two"></div>
-            <div class="ring three"></div>
-
-            <div class="center-logo">
-                W
-            </div>
+            <div class="center-logo">W</div>
         </div>
 
     </section>
@@ -825,61 +577,37 @@ nav{
             <a href="services.html" class="module">
                 <div class="module-icon">🛠️</div>
                 <h3>Services</h3>
-                <p>
-                    Explore the professional services offered
-                    by WebForge.
-                </p>
-                <span class="module-arrow">→</span>
+                <p>Explore the professional services offered by WebForge.</p>
             </a>
 
             <a href="request.html" class="module">
                 <div class="module-icon">📝</div>
                 <h3>Create Your Project</h3>
-                <p>
-                    Submit your project requirements and
-                    request a website or digital solution.
-                </p>
-                <span class="module-arrow">→</span>
+                <p>Submit your project requirements and request a website.</p>
             </a>
 
             <a href="project.html" class="module">
                 <div class="module-icon">📁</div>
                 <h3>My Projects</h3>
-                <p>
-                    View completed client projects and
-                    their live website links.
-                </p>
-                <span class="module-arrow">→</span>
+                <p>View completed client projects and their live website links.</p>
             </a>
 
             <a href="process.html" class="module">
                 <div class="module-icon">🔄</div>
                 <h3>Work Process</h3>
-                <p>
-                    Understand how WebForge handles projects
-                    from request to final delivery.
-                </p>
-                <span class="module-arrow">→</span>
+                <p>Understand how WebForge handles projects from request to delivery.</p>
             </a>
 
             <a href="hire.html" class="module">
                 <div class="module-icon">👨‍💻</div>
                 <h3>Hire Me</h3>
-                <p>
-                    View professional profile information
-                    and connect for your next project.
-                </p>
-                <span class="module-arrow">→</span>
+                <p>View professional profile information and connect.</p>
             </a>
 
             <a href="request.html" class="module">
                 <div class="module-icon">🚀</div>
                 <h3>Start a Project</h3>
-                <p>
-                    Have an idea? Start your project request
-                    with WebForge today.
-                </p>
-                <span class="module-arrow">→</span>
+                <p>Start your project request with WebForge today.</p>
             </a>
 
         </div>
@@ -895,15 +623,12 @@ nav{
         </p>
 
         <div class="request-list" id="requestList">
-            <div class="loading">
-                Loading project requests...
-            </div>
+            <div class="loading">Loading project requests...</div>
         </div>
 
     </section>
 
     <section class="cta">
-
         <h2>Ready to Build Something?</h2>
 
         <p>
@@ -914,108 +639,347 @@ nav{
         <a href="request.html" class="cta-btn">
             Create Project Request →
         </a>
-
     </section>
 
 </main>
 
-<div class="toast" id="toast"></div>
-
 <script>
-const API_URL="https://6cmkqxcivc.execute-api.ap-south-1.amazonaws.com/prod/request";
+const API_URL = "https://6cmkqxcivc.execute-api.ap-south-1.amazonaws.com/prod/request";
 
-let projectRequests=[];
+let projectRequests = [];
 
-async function loadProjectRequests(){
-    const requestList=document.getElementById("requestList");
-    const notificationBody=document.getElementById("notificationBody");
 
-    try{
-        const response=await fetch(API_URL,{
-            method:"GET",
-            headers:{
-                "Accept":"application/json"
-            },
-            cache:"no-store"
+// NOTIFICATION BELL CLICK
+function showNotifications(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const popup = document.getElementById("notificationPopup");
+
+    if (!popup) {
+        console.error("Notification popup not found");
+        return;
+    }
+
+    popup.classList.toggle("show");
+}
+
+
+// CLOSE POPUP WHEN CLICKING OUTSIDE
+document.addEventListener("click", function(event) {
+
+    const wrapper = document.querySelector(".notification-wrapper");
+    const popup = document.getElementById("notificationPopup");
+
+    if (
+        wrapper &&
+        popup &&
+        !wrapper.contains(event.target)
+    ) {
+        popup.classList.remove("show");
+    }
+
+});
+
+
+// ESCAPE HTML
+function escapeHTML(value) {
+
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+
+    });
+
+}
+
+
+// UPDATE NOTIFICATION COUNT
+function updateNotificationCount() {
+
+    const count = document.getElementById("notificationCount");
+    const headerCount = document.getElementById("notificationHeaderCount");
+
+    if (!count) return;
+
+    const total = projectRequests.length;
+
+    if (total > 0) {
+
+        count.textContent = total;
+        count.classList.remove("hidden");
+
+        if (headerCount) {
+            headerCount.textContent =
+                total + " new request" + (total === 1 ? "" : "s");
+        }
+
+    } else {
+
+        count.textContent = "0";
+        count.classList.add("hidden");
+
+        if (headerCount) {
+            headerCount.textContent = "No new requests";
+        }
+
+    }
+
+}
+
+
+// DISPLAY NOTIFICATIONS
+function renderNotifications() {
+
+    const body = document.getElementById("notificationBody");
+
+    if (!body) return;
+
+    if (projectRequests.length === 0) {
+
+        body.innerHTML =
+            '<div class="notification-empty">No project requests yet.</div>';
+
+        return;
+    }
+
+    const latestRequests = [...projectRequests].reverse();
+
+    body.innerHTML = latestRequests.map(function(request) {
+
+        const client = escapeHTML(
+            request.clientName || request.client || "Client"
+        );
+
+        const project = escapeHTML(
+            request.projectName ||
+            request.project ||
+            request.services ||
+            request.websiteType ||
+            "Project Request"
+        );
+
+        const description = escapeHTML(
+            request.description || "New project request received."
+        );
+
+        const status = escapeHTML(
+            request.status || "New Request"
+        );
+
+        return `
+            <div class="notification-item" onclick="openRequestPanel()">
+
+                <div class="notification-item-title">
+                    🚀 ${client}
+                </div>
+
+                <div class="notification-item-text">
+                    ${project}<br>
+                    ${description}
+                </div>
+
+                <span class="notification-item-status">
+                    ${status}
+                </span>
+
+            </div>
+        `;
+
+    }).join("");
+
+}
+
+
+// DISPLAY ALL PROJECT REQUESTS
+function renderRequests() {
+
+    const requestList = document.getElementById("requestList");
+
+    if (!requestList) return;
+
+    if (projectRequests.length === 0) {
+
+        requestList.innerHTML =
+            '<div class="no-request">No project requests received yet.</div>';
+
+        return;
+    }
+
+    requestList.innerHTML = projectRequests.map(function(request) {
+
+        return `
+            <div class="request-card">
+
+                <div class="request-top">
+
+                    <div class="request-name">
+                        ${escapeHTML(request.clientName || request.client || "Client")}
+                    </div>
+
+                    <span class="request-status">
+                        ${escapeHTML(request.status || "New Request")}
+                    </span>
+
+                </div>
+
+                <div class="request-info">
+
+                    <strong>Email:</strong>
+                    ${escapeHTML(request.email || "N/A")}<br>
+
+                    <strong>Contact:</strong>
+                    ${escapeHTML(request.contact || "N/A")}<br>
+
+                    <strong>Website Type:</strong>
+                    ${escapeHTML(request.websiteType || "N/A")}<br>
+
+                    <strong>Project:</strong>
+                    ${escapeHTML(request.services || request.projectName || "N/A")}<br>
+
+                    <strong>Budget:</strong>
+                    ${escapeHTML(request.budget || "N/A")}<br>
+
+                    <strong>Timeline:</strong>
+                    ${escapeHTML(request.timeline || "N/A")}<br>
+
+                    <strong>Date:</strong>
+                    ${escapeHTML(request.requestDate || "N/A")}
+
+                </div>
+
+                <div class="request-description">
+                    ${escapeHTML(request.description || "No description provided.")}
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+
+}
+
+
+// OPEN REQUEST PANEL
+function openRequestPanel() {
+
+    const panel = document.getElementById("requestPanel");
+    const popup = document.getElementById("notificationPopup");
+
+    if (popup) {
+        popup.classList.remove("show");
+    }
+
+    if (panel) {
+
+        panel.classList.add("show");
+
+        panel.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
         });
 
-        if(!response.ok){
-            throw new Error("HTTP Error: "+response.status);
+    }
+
+}
+
+
+// VIEW ALL REQUESTS
+function viewAllRequests() {
+    openRequestPanel();
+}
+
+
+// LOAD REQUESTS FROM AWS
+async function loadProjectRequests() {
+
+    const requestList = document.getElementById("requestList");
+    const notificationBody = document.getElementById("notificationBody");
+
+    try {
+
+        const response = await fetch(API_URL, {
+
+            method: "GET",
+
+            headers: {
+                "Accept": "application/json"
+            },
+
+            cache: "no-store"
+
+        });
+
+        if (!response.ok) {
+            throw new Error("HTTP Error: " + response.status);
         }
 
-        const result=await response.json();
+        const result = await response.json();
 
-        console.log("AWS GET Response:",result);
+        console.log("AWS GET Response:", result);
 
-        let data=result;
+        let data = result;
 
-        if(result&&typeof result.body==="string"){
-            try{
-                data=JSON.parse(result.body);
-            }catch{
-                data=result.body;
-            }
+        // API Gateway response handling
+        if (data && typeof data.body === "string") {
+
+            data = JSON.parse(data.body);
+
+        } else if (data && data.body && typeof data.body === "object") {
+
+            data = data.body;
+
         }
 
-        if(Array.isArray(data)){
-            projectRequests=data;
-        }else if(data&&Array.isArray(data.requests)){
-            projectRequests=data.requests;
-        }else if(data&&Array.isArray(data.Items)){
-            projectRequests=data.Items;
-        }else if(data&&data.data&&Array.isArray(data.data)){
-            projectRequests=data.data;
-        }else{
-            projectRequests=[];
+        // Identify requests array
+        if (Array.isArray(data)) {
+
+            projectRequests = data;
+
+        } else if (data && Array.isArray(data.requests)) {
+
+            projectRequests = data.requests;
+
+        } else if (data && Array.isArray(data.Items)) {
+
+            projectRequests = data.Items;
+
+        } else if (data && Array.isArray(data.data)) {
+
+            projectRequests = data.data;
+
+        } else {
+
+            projectRequests = [];
+
+            console.log("AWS response does not contain a recognised requests array.");
+
         }
 
         renderRequests();
         renderNotifications();
         updateNotificationCount();
 
-    }catch(error){
+    } catch (error) {
 
-        console.error("AWS Request Error:",error);
+        console.error("AWS Request Error:", error);
 
-        projectRequests=[];
-
-        if(requestList){
-            requestList.innerHTML=
+        if (requestList) {
+            requestList.innerHTML =
                 '<div class="no-request">Unable to load project requests.</div>';
         }
 
-        if(notificationBody){
-            notificationBody.innerHTML=
+        if (notificationBody) {
+            notificationBody.innerHTML =
                 '<div class="notification-empty">Unable to load notifications.</div>';
         }
 
-        updateNotificationCount();
-    }
-}
-
-function updateNotificationCount(){
-
-    const count=document.getElementById("notificationCount");
-    const headerCount=document.getElementById("notificationHeaderCount");
-
-    if(!count)return;
-
-    const total=projectRequests.length;
-
-    if(total>0){
-
-        count.textContent=total;
-        count.classList.remove("hidden");
-
-        if(headerCount){
-            headerCount.textContent=
-                total+" new request"+(total===1?"":"s");
-        }
-
-    }else{
-
-        count.textContent="0";
-        count.classList.add("hidden");
-
-        if(headerCount){
-            headerCount.textContent="No new requests";
+        projectRequests = [];
