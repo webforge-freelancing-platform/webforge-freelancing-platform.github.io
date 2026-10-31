@@ -697,6 +697,7 @@ document.getElementById("registerForm").addEventListener("submit", function(e){
     };
 
     localStorage.setItem("webforgeUser", JSON.stringify(user));
+    localStorage.setItem("webforgeLoggedIn","true");
 
     alert("Account created successfully!");
 
